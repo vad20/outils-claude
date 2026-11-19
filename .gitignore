@@ -1,0 +1,17 @@
+# Gros dépôts téléchargés (re-téléchargeables)
+depots/
+# Environnement Python de Chatterbox (réinstallé par l'installateur)
+chatterbox/.venv/
+# Fichiers audio/vidéo de test
+tests-voix/
+*.wav
+*.mp3
+*.mp4
+# Sécurité : ne jamais envoyer de clés
+.env
+*.env
+client_secret*.json
+credentials*
+*.key
+*.pem
+.claude.json
