@@ -54,6 +54,15 @@ if ($userPath -notlike "*\.local\bin*") {
 Refresh-Path
 if (A-Commande claude) { Ok "claude $(claude --version)" }
 
+# Raccourci bureau « Claude Code »
+$desk = [Environment]::GetFolderPath("Desktop")
+$wt = (Get-Command wt.exe -ErrorAction SilentlyContinue).Source
+$lnk = (New-Object -ComObject WScript.Shell).CreateShortcut("$desk\Claude Code.lnk")
+if ($wt) { $lnk.TargetPath = $wt; $lnk.Arguments = "-d `"$HOME`" powershell -NoExit -Command claude" }
+else     { $lnk.TargetPath = "powershell.exe"; $lnk.Arguments = "-NoExit -Command claude" }
+$lnk.WorkingDirectory = $HOME; $lnk.IconLocation = "$HOME\.local\bin\claude.exe,0"; $lnk.Description = "Ouvrir Claude Code"; $lnk.Save()
+Ok "Raccourci bureau 'Claude Code'"
+
 # ---------------------------------------------------------------- 3. Fichiers
 Titre "3/7 Skills, note permanente et dossier d'outils"
 New-Item -ItemType Directory -Force "$ClaudeDir\skills" | Out-Null
