@@ -35,6 +35,26 @@ Règles de Vadim : vertical 1080×1920, 30 s, voix off Chatterbox, aucune pub/me
 - `--ref` = clonage d'une voix (10-20 s). Filigrane audio inaudible (Perth).
 - Kokoro (`hyperframes tts`) jugé trop robotique → ne pas utiliser. Éviter ElevenLabs gratuit et les modèles CC-BY (mention obligatoire). Alternative : Qwen3-TTS (Apache 2.0).
 
+## 2b. Musique de fond
+
+**ACE-Step 1.5** (ace-step/ACE-Step-1.5, code et modèles **MIT** → commercial OK, aucune mention). Local sur GPU (~7 Go de VRAM, quelques secondes pour 30 s).
+- Dossier `C:\Users\vadim\outils-claude\ace-step\` (clone + venv `uv sync`, PyTorch 2.7 CUDA 12.8 ; modèles dans `ace-step\checkpoints`, téléchargés au 1er usage)
+- `C:\Users\vadim\outils-claude\ace-step\.venv\Scripts\python.exe C:\Users\vadim\outils-claude\ace-step-musique.py "description en anglais" sortie.wav [--duree 30] [--bpm 90] [--lm]`
+- Toujours instrumental (pour passer sous la voix off), à mixer bas (≈ -18 dB sous la voix). `--lm` = meilleure structure, plus lent.
+- Sur TikTok, un **son tendance ajouté dans l'appli** booste souvent plus : les deux se combinent.
+
+## 2c. Tendances et sujets
+
+| Skill(s) | Source | Usage | Prérequis |
+|---|---|---|---|
+| `last30days` | mvanhorn/last30days-skill (MIT) | Ce qui fait parler sur un sujet ces 30 derniers jours (TikTok, YouTube, Reddit, X, Instagram, HN…) avec synthèse | Python ; Reddit/HN/GitHub sans clé ; TikTok/Instagram via `SCRAPECREATORS_API_KEY` (setup au 1er lancement) |
+| `trend-discovery`, `outlier-post-finder`, `transcript-intelligence`, `competitor-social-research`, `creator-profile-teardown`, `comment-mining`, `audience-research`, `content-repurposing`, `social-listening-brief`, `product-demand-research`, `influencer-prospecting`, `ad-library-teardown`, `scrapecreators-api` | ScrapeCreators/social-media-research-skills (MIT) | Tendances, vidéos qui explosent, accroches, concurrents, commentaires | `SCRAPECREATORS_API_KEY` (10 000 appels gratuits à l'inscription) |
+| MCP Apify | — | Actors de scraping TikTok (tendances, hashtags, sons) | Connexion `/mcp` → apify |
+
+## 2d. Publication TikTok
+
+Pas d'outil installé (choix délibéré). Les robots non officiels (social-auto-upload, tiktok-uploader) utilisent les cookies de session → contraires aux règles TikTok, risque de bannissement : **ne pas utiliser**. Publication publique automatique = service validé par TikTok, payant (Upload-Post ≈ 24 $/mois, Postiz Cloud ≈ 29 $/mois, Treg à l'usage — capacité de publication non confirmée). Pour l'instant : **Vadim publie lui-même**, Claude fournit MP4 + légende + hashtags.
+
 ## 3. Business, marketing, SEO
 
 | Skill(s) | Source | Usage | Prérequis |

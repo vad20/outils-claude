@@ -124,6 +124,17 @@ if (Test-Path $vpy) {
     }
 }
 
+# ---------------------------------------------------------------- 5a. ACE-Step 1.5 (musique de fond)
+Titre "5a ACE-Step - musique (plusieurs Go, patience)"
+Copy-Item "$Src\ace-step-musique.py" "$Dest\" -Force -ErrorAction SilentlyContinue
+if (-not (Test-Path "$Dest\ace-step\.venv\Scripts\python.exe") -and $py -and (A-Commande git)) {
+    if (-not (Test-Path "$Dest\ace-step")) { git clone -q --depth 1 https://github.com/ace-step/ACE-Step-1.5.git "$Dest\ace-step" }
+    & $py -m pip install --user -q uv
+    $uvA = & $py -c "import sysconfig,os;print(os.path.join(sysconfig.get_path('scripts','nt_user'),'uv.exe'))"
+    Push-Location "$Dest\ace-step"; & $uvA sync --python $py 2>$null | Out-Null; Pop-Location
+}
+if (Test-Path "$Dest\ace-step\.venv\Scripts\python.exe") { Ok "ACE-Step (modeles telecharges au 1er usage)" } else { [void]$Manuel.Add("ACE-Step : voir la section 2b du README") }
+
 # ---------------------------------------------------------------- 5b. SkillSpector (scanner de securite des skills)
 Titre "5b SkillSpector"
 if (-not (Test-Path "$HOME\.local\bin\skillspector.exe") -and $py) {
@@ -170,6 +181,8 @@ if (A-Commande gh) {
 if (-not (git config --global user.name)) {
     [void]$Manuel.Add("Git : git config --global user.name ""vad20""  puis  git config --global user.email ""ton@adresse""")
 }
+[void]$Manuel.Add("ScrapeCreators (tendances TikTok) : demande a Claude de lancer le setup de last30days, ou cree une cle sur scrapecreators.com et enregistre-la : [Environment]::SetEnvironmentVariable('SCRAPECREATORS_API_KEY','ta_cle','User')")
+[void]$Manuel.Add("Apify : dans Claude Code, tape /mcp puis apify et connecte-toi")
 [void]$Manuel.Add("Orca (optionnel) : telecharge-le sur https://orca.dev/download")
 
 Write-Host ""

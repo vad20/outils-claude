@@ -8,6 +8,9 @@ Tout est rangé et documenté dans `C:\Users\vadim\outils-claude\` (dépôt GitH
 ## Vidéos TikTok
 - Vertical 1080×1920, 30 secondes, sans mention ni pub d'un service tiers.
 - Script et structure : skill `editing` (video-agent-skills). Rendu : HyperFrames (ou `lemo-opuscar` pour un style de film). Voix off : **Chatterbox d'office** (section « Voix off » du README), jamais Kokoro.
+- Musique de fond : **ACE-Step d'office** (section « Musique de fond » du README), instrumentale, mixée bas sous la voix.
+- Trouver le sujet : `last30days`, `trend-discovery`, `outlier-post-finder` (clé ScrapeCreators) ou le MCP Apify.
+- Livrable : MP4 + légende + hashtags, je publie moi-même (pas d'outil de publication automatique pour l'instant).
 - **Ne publie jamais sans mon accord explicite.** Demande-moi avant d'installer Treg (curl | sh) ou d'utiliser Codex/ElevenLabs (payants).
 
 ## Windows
