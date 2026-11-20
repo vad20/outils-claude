@@ -28,6 +28,15 @@ Installés dans `C:\Users\vadim\.claude\skills\`. Rien à faire pour les utilise
 | `gws-shared`, `gws-gmail`, `gws-drive`, `gws-docs`, `gws-sheets`, `gws-calendar`, `gws-slides`, `gws-tasks`, `gws-chat`, `gws-forms`, `gws-people`, `gws-meet`, `gws-keep`, `gws-workflow` | googleworkspace/cli | Piloter Google Workspace via la CLI `gws` | `npm i -g @googleworkspace/cli` puis `gws auth login` |
 | `find-skills` | vercel-labs/skills | Chercher et installer de nouveaux skills (`npx skills add ...`) | Node 22.20+ |
 
+### Ajoutés le 2026-11-20
+
+| Skill(s) | Dépôt | À quoi ça sert | Prérequis / attention |
+|---|---|---|---|
+| `editing` (point d'entrée), `studio-setup`, `studio-script`, `short-editing`, `clips`, `broll`, `steal`, `outliers`, `insta-audit`, `publish`, `short-translate`, `vox`, `codex-images` | Melvynx/video-agent-skills (MIT) | **Vidéos courtes TikTok/Reels/Shorts** : scripts 30-60 s dans la voix du créateur, montage motion design, long → shorts, B-roll, copier un style, trouver les vidéos « outliers » TikTok/Insta, publication | `outliers`, `insta-audit`, `publish` passent par **Treg** (installé via `curl … \| sh` : demander l'accord de Vadim avant). `short-translate` = ElevenLabs (payant) ; `codex-images`/`vox` = Codex (plan ChatGPT). Pour la voix off, **garder Chatterbox**. `publish` : **jamais sans accord explicite**. |
+| `founder-board`, `founder-brand`, `founder-cfo`, `founder-competitors`, `founder-consumer`, `founder-launch`, `founder-marketing`, `founder-offer`, `founder-ops`, `founder-plan`, `founder-pricing` | Jakeschincariol/founder-skill (MIT) | Tester une idée de business avant de la lancer : board d'experts, offre, prix (Van Westendorp), finances, concurrents, marketing, lancement | Scripts Python hors ligne |
+| `seo-coach`, `seo-audit`, `seo-report`, `seo-project-setup`, `keyword-research`, `keyword-clustering`, `competitor-analysis`, `competitive-landscape`, `link-prospecting`, `local-seo`, `ai-prompt-research`, `ai-visibility-audit` | every-app/open-seo (MIT) | SEO : audits, mots-clés, concurrents, liens, SEO local, visibilité dans les IA | La plupart demandent le **serveur MCP OpenSEO** (pas encore connecté) |
+| `firecrawl-build`, `firecrawl-build-onboarding`, `firecrawl-build-scrape`, `firecrawl-build-search`, `firecrawl-build-interact` | firecrawl/firecrawl | Intégrer Firecrawl (scraping/recherche web) dans le code d'une appli | Clé `FIRECRAWL_API_KEY` (compte Firecrawl) |
+
 Non installés mais disponibles : 81 autres skills gws (recettes `recipe-*`, personas `persona-*`, variantes) dans `depots\cli\skills\`. Les copier dans `.claude\skills\` si besoin.
 
 ## 2. Serveurs MCP
@@ -70,3 +79,29 @@ Commandes à lancer dans un terminal où `claude` est installé (`--scope user` 
 | Orca | stablyai/orca | Appli de bureau qui orchestre plusieurs agents (Claude Code, Codex…) en parallèle. À installer depuis https://orca.dev/download. Ses skills (`depots\orca\skills\`) ne servent que si Orca est installé. |
 | gws (CLI) | googleworkspace/cli | Le programme derrière les skills `gws-*` (voir §1). |
 | skills (CLI) | vercel-labs/skills | Le programme `npx skills` derrière `find-skills`. |
+
+### Catalogue ajouté le 2026-11-20 (applis/projets, **non installés**, à installer seulement si besoin)
+
+| Projet | Dépôt | Ce que c'est | Remarque |
+|---|---|---|---|
+| Chatterbox | resemble-ai/chatterbox (MIT) | Moteur de voix off | ✅ **déjà installé** (section 2b) |
+| Vocalie-TTS | Bricesodini/Vocalie-TTS (MIT) | Interface de voix off FR | Évalué, non retenu (voir 2b) |
+| Open Higgsfield | wide-trace/open-higgsfield (pas de licence) | Studio de génération image/vidéo | Appelle des modèles payants via API ; pas de licence = réutilisation non autorisée en théorie |
+| Open-Generative-AI | Anil-matcha/Open-Generative-AI (MIT) | Studio image/vidéo IA « libre » | Utilise des API externes (clés/crédits) |
+| VoiceStudio | debpalash/VoiceStudio (AGPL-3.0) | Alternative locale à ElevenLabs (clonage, TTS) | Alternative à Chatterbox ; skill `voicestudio` dans le dépôt si l'appli est installée |
+| Handy | cjpais/Handy (MIT) | Dictée vocale (parole → texte) hors ligne | Appli de bureau |
+| OpenWhispr | OpenWhispr/openwhispr (MIT) | Dictée vocale locale/cloud | Skills `openwhispr-*` dans le dépôt si l'appli est installée |
+| Cap | CapSoftware/Cap | Enregistrement d'écran (alternative à Loom) | Skill `cap` (CLI) dans le dépôt si installé |
+| AppFlowy | AppFlowy-IO/AppFlowy (AGPL-3.0) | Espace de travail type Notion | Appli de bureau |
+| Plane | makeplane/plane (AGPL-3.0) | Gestion de projet (Jira/Linear) | Auto-hébergement (Docker) |
+| OpenProject | opf/openproject (GPL-3.0) | Gestion de projet | Auto-hébergement |
+| Chatwoot | chatwoot/chatwoot | Support client / live chat | Auto-hébergement |
+| Cal.diy | calcom/cal.diy (MIT) | Prise de rendez-vous (Cal.com) | Skill `calcom-api` dans le dépôt |
+| PostHog | PostHog/posthog | Analytique produit | Service/auto-hébergement ; MCP PostHog disponible |
+| Firecrawl | firecrawl/firecrawl (AGPL-3.0) | Scraping/recherche web pour agents | Skills installés ; MCP Firecrawl possible avec clé |
+| Composio | ComposioHQ/composio (MIT) | 1000+ intégrations pour agents | Service avec clé ; skills du dépôt = internes aux devs |
+| Playwright | microsoft/playwright (Apache-2.0) | Automatisation de navigateur | ✅ déjà couvert par le **MCP Playwright** |
+| ECC | affaan-m/ECC (MIT) | Pack géant (~1000 skills) pour Claude Code | **Non installé en bloc** (trop gros) ; piocher des skills au cas par cas |
+| Ruflo | ruvnet/ruflo (MIT) | Essaims d'agents (~400 skills + MCP) | **Non installé** (lourd) ; à évaluer si besoin |
+
+Les skills internes aux dépôts Plane, Playwright, PostHog, Composio et Cal.diy servent à développer ces projets eux-mêmes : non installés.

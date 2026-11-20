@@ -17,7 +17,13 @@ robocopy "$ClaudeDir\skills" "$Repo\config\skills" /MIR /XD synced /NFL /NDL /NJ
 Copie-Normalisee "$ClaudeDir\CLAUDE.md" "$Repo\config\CLAUDE.md"
 
 Set-Location $Repo
-git add -A
+# L'antivirus bloque parfois brièvement l'écriture : on réessaie
+$ok = $false
+for ($i = 1; $i -le 5 -and -not $ok; $i++) {
+    git add -A 2>$null
+    if ($LASTEXITCODE -eq 0) { $ok = $true } else { Start-Sleep -Seconds 3 }
+}
+if (-not $ok) { Write-Host "Echec de git add (fichiers bloques). Relance SAUVEGARDER.bat dans un instant." -ForegroundColor Red; exit 1 }
 git diff --cached --quiet
 if ($LASTEXITCODE -eq 0) { Write-Host "Rien de nouveau a sauvegarder."; exit 0 }
 git commit -q -m "Sauvegarde du $(Get-Date -Format 'yyyy-MM-dd HH:mm')"
