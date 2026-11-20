@@ -15,3 +15,6 @@ credentials*
 *.key
 *.pem
 .claude.json
+
+# Rapports de scan (locaux)
+scan-securite/

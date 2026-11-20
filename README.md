@@ -1,107 +1,107 @@
 # Outils Claude de Vadim
 
-## Installer sur un nouveau PC (en un clic)
+Index de tout ce qui est installé pour Claude. Dernière mise à jour : 2026-11-20.
+Dépôt privé : `vad20/outils-claude`. Les outils n'ont pas de rapport entre eux.
 
-1. Sur GitHub (dépôt privé `vad20/outils-claude`) : **Code → Download ZIP**, puis extraire le zip.
-2. Double-cliquer sur **`INSTALLER.bat`**. Il installe les programmes, les skills, la note permanente, Chatterbox et les serveurs MCP. Il peut être relancé sans risque.
-3. Faire les connexions personnelles qu'il liste à la fin (GitHub, Google, clés). Elles ne sont jamais stockées dans le dépôt.
+## 0. Installer sur un nouveau PC (en un clic)
 
-Pour garder les PC synchronisés : sur ce PC, après chaque nouvel outil, double-cliquer sur **`SAUVEGARDER.bat`** (envoie les skills et la note sur GitHub). Sur un autre PC, préférer `gh repo clone vad20/outils-claude "$HOME\outils-claude"` plutôt que le zip, pour pouvoir sauvegarder depuis lui aussi.
+1. GitHub → dépôt privé `vad20/outils-claude` → **Code → Download ZIP** → extraire.
+2. Double-cliquer **`INSTALLER.bat`** (relançable sans risque). Il installe : programmes (git, gh, Node, Python 3.12, ffmpeg, yt-dlp, deno, uv), Claude Code CLI, les skills, la note permanente, Chatterbox (GPU si NVIDIA), SkillSpector, le plugin CLI-Anything et les serveurs MCP.
+3. Faire les connexions personnelles qu'il liste à la fin (jamais stockées dans le dépôt).
 
-Le dépôt contient : `config/skills/` (copie de `~\.claude\skills`), `config/CLAUDE.md` (note permanente), `chatterbox/voix.py`, ce README et les scripts. Il ne contient **aucune clé ni mot de passe** (voir `.gitignore`).
+Synchroniser : après un ajout d'outil sur ce PC → **`SAUVEGARDER.bat`**. Sur un autre PC, préférer `gh repo clone vad20/outils-claude "$HOME\outils-claude"` (permet aussi d'y sauvegarder).
+Contenu du dépôt : `config/skills/` (copie de `~\.claude\skills`), `config/CLAUDE.md` (note permanente), `chatterbox/voix.py`, scripts, ce README. **Aucune clé ni mot de passe** (`.gitignore`). `depots/` (dépôts sources complets) reste local.
 
-Index de tous les outils installés. Les outils n'ont **aucun rapport entre eux**.
-Les dépôts GitHub complets (téléchargés le 2026-11-19, sans git) sont dans `depots\<nom>`.
-Pour mettre un outil à jour : retélécharger `https://github.com/<repo>/archive/HEAD.zip`.
+**⚠ Windows : PowerShell bloque les `.ps1`** → appeler `gws.cmd`, `npx.cmd`, `npm.cmd`.
 
-## 1. Skills (chargés automatiquement dans chaque session)
+---
 
-Installés dans `C:\Users\vadim\.claude\skills\`. Rien à faire pour les utiliser.
+## 1. Vidéo (TikTok / Shorts / Reels)
 
-| Skill(s) | Dépôt | À quoi ça sert | Prérequis |
+Règles de Vadim : vertical 1080×1920, 30 s, voix off Chatterbox, aucune pub/mention d'un service, **jamais publier sans accord explicite**.
+
+| Skill(s) | Source | Usage | Prérequis / attention |
 |---|---|---|---|
-| `humanizer` | blader/humanizer | Réécrire un texte qui « sonne IA » pour qu'il paraisse humain | aucun |
-| `watch` | bradautomates/claude-video | Regarder une vidéo (URL ou fichier) : images + transcription | Python, yt-dlp, ffmpeg (clé Gemini optionnelle) |
-| `hyperframes`, `hyperframes-cli`, `hyperframes-registry`, `media-use`, `figma`, `remotion-to-hyperframes`, `reverse-any-video`, `slideshow`, `style-sampling` | heygen-com/hyperframes | Créer des vidéos en HTML (HyperFrames de HeyGen) | Node 22+, FFmpeg. ⚠ envoie une télémétrie d'usage (désactivable) |
-| `21st-ui` | 21st-dev/magic-mcp | Trouver/générer des composants UI React (21st.dev) | serveur MCP 21st + clé API (voir §2) |
-| `reverse-engineer-anything` | morluto/rea | Rétro-ingénierie de binaires/apps | serveur MCP REA (voir §2) |
-| `gws-shared`, `gws-gmail`, `gws-drive`, `gws-docs`, `gws-sheets`, `gws-calendar`, `gws-slides`, `gws-tasks`, `gws-chat`, `gws-forms`, `gws-people`, `gws-meet`, `gws-keep`, `gws-workflow` | googleworkspace/cli | Piloter Google Workspace via la CLI `gws` | `npm i -g @googleworkspace/cli` puis `gws auth login` |
-| `find-skills` | vercel-labs/skills | Chercher et installer de nouveaux skills (`npx skills add ...`) | Node 22.20+ |
+| `editing` (point d'entrée), `studio-setup`, `studio-script`, `short-editing`, `clips`, `broll`, `steal`, `outliers`, `insta-audit`, `publish`, `short-translate`, `vox`, `codex-images` | Melvynx/video-agent-skills (MIT) | Scripts 30-60 s, montage motion design, long → shorts, B-roll, copier un style, vidéos « outliers », publication | `outliers`/`insta-audit`/`publish` via **Treg** (`curl \| sh` → demander avant). `short-translate` = ElevenLabs payant. `codex-images`/`vox` = Codex (forfait ChatGPT → demander avant). |
+| `hyperframes`, `hyperframes-cli`, `hyperframes-registry`, `media-use`, `figma`, `remotion-to-hyperframes`, `reverse-any-video`, `slideshow`, `style-sampling` | heygen-com/hyperframes | Vidéos rendues depuis HTML (~450 effets), montage, sous-titres, audio | Node 22+, ffmpeg. Télémétrie (désactivable : `hyperframes telemetry disable`). CLI : `node C:\Users\vadim\.claude\skills\hyperframes\scripts\plugin-cli.mjs <cmd>` |
+| `lemo-opuscar` | lemomo-ai/lemo-opuscar | Courts films « en code » dans 99 styles (aquarelle, ukiyo-e, briefing satellite…) | Bibliothèque clonée dans `~\lemo-opuscar` au 1er usage (`setup.sh`, Git Bash). Films produits = à Vadim, usage commercial, sans crédit |
+| `watch` | bradautomates/claude-video | Regarder une vidéo (URL/fichier) : images + transcription | ✅ Python 3.12, ffmpeg, yt-dlp, deno installés |
 
-### Ajoutés le 2026-11-20
+## 2. Voix off
 
-| Skill(s) | Dépôt | À quoi ça sert | Prérequis / attention |
+**Moteur par défaut : Chatterbox Multilingual** (Resemble AI, MIT → commercial OK, aucune mention). Local sur GPU RTX 4070 Ti.
+- Dossier `C:\Users\vadim\outils-claude\chatterbox\` (venv `.venv`, Python 3.12, PyTorch 2.6 CUDA 12.4, chatterbox-tts 0.1.7)
+- `C:\Users\vadim\outils-claude\chatterbox\.venv\Scripts\python.exe C:\Users\vadim\outils-claude\chatterbox\voix.py "Texte" sortie.wav [--ref voix.wav] [--exag 0.5] [--cfg 0.5]`
+- `--ref` = clonage d'une voix (10-20 s). Filigrane audio inaudible (Perth).
+- Kokoro (`hyperframes tts`) jugé trop robotique → ne pas utiliser. Éviter ElevenLabs gratuit et les modèles CC-BY (mention obligatoire). Alternative : Qwen3-TTS (Apache 2.0).
+
+## 3. Business, marketing, SEO
+
+| Skill(s) | Source | Usage | Prérequis |
 |---|---|---|---|
-| `editing` (point d'entrée), `studio-setup`, `studio-script`, `short-editing`, `clips`, `broll`, `steal`, `outliers`, `insta-audit`, `publish`, `short-translate`, `vox`, `codex-images` | Melvynx/video-agent-skills (MIT) | **Vidéos courtes TikTok/Reels/Shorts** : scripts 30-60 s dans la voix du créateur, montage motion design, long → shorts, B-roll, copier un style, trouver les vidéos « outliers » TikTok/Insta, publication | `outliers`, `insta-audit`, `publish` passent par **Treg** (installé via `curl … \| sh` : demander l'accord de Vadim avant). `short-translate` = ElevenLabs (payant) ; `codex-images`/`vox` = Codex (plan ChatGPT). Pour la voix off, **garder Chatterbox**. `publish` : **jamais sans accord explicite**. |
-| `founder-board`, `founder-brand`, `founder-cfo`, `founder-competitors`, `founder-consumer`, `founder-launch`, `founder-marketing`, `founder-offer`, `founder-ops`, `founder-plan`, `founder-pricing` | Jakeschincariol/founder-skill (MIT) | Tester une idée de business avant de la lancer : board d'experts, offre, prix (Van Westendorp), finances, concurrents, marketing, lancement | Scripts Python hors ligne |
-| `seo-coach`, `seo-audit`, `seo-report`, `seo-project-setup`, `keyword-research`, `keyword-clustering`, `competitor-analysis`, `competitive-landscape`, `link-prospecting`, `local-seo`, `ai-prompt-research`, `ai-visibility-audit` | every-app/open-seo (MIT) | SEO : audits, mots-clés, concurrents, liens, SEO local, visibilité dans les IA | La plupart demandent le **serveur MCP OpenSEO** (pas encore connecté) |
-| `firecrawl-build`, `firecrawl-build-onboarding`, `firecrawl-build-scrape`, `firecrawl-build-search`, `firecrawl-build-interact` | firecrawl/firecrawl | Intégrer Firecrawl (scraping/recherche web) dans le code d'une appli | Clé `FIRECRAWL_API_KEY` (compte Firecrawl) |
+| `founder-board`, `-brand`, `-cfo`, `-competitors`, `-consumer`, `-launch`, `-marketing`, `-offer`, `-ops`, `-plan`, `-pricing` | Jakeschincariol/founder-skill (MIT) | Tester une idée de business : board d'experts, offre, prix, finances, concurrents, marketing, lancement, business plan | Scripts Python hors ligne |
+| `seo-coach`, `seo-audit`, `seo-report`, `seo-project-setup`, `keyword-research`, `keyword-clustering`, `competitor-analysis`, `competitive-landscape`, `link-prospecting`, `local-seo`, `ai-prompt-research`, `ai-visibility-audit` | every-app/open-seo (MIT) | SEO et visibilité dans les IA | La plupart demandent le **MCP OpenSEO** (non connecté) |
+| `humanizer` | blader/humanizer | Rendre un texte « IA » naturel | aucun |
 
-Non installés mais disponibles : 81 autres skills gws (recettes `recipe-*`, personas `persona-*`, variantes) dans `depots\cli\skills\`. Les copier dans `.claude\skills\` si besoin.
+## 4. Google Workspace et productivité
 
-## 2. Serveurs MCP
-
-État au 2026-11-19 : Playwright ✅, Apify ✅ (OAuth au 1er usage), 21st ✅ (clé dans la config), REA ✅ (via `npx rea-agents setup`). `claude` CLI installé dans `C:\Users\vadim\.local\bin` (ajouté au PATH).
-
-**Google Workspace (gws) ✅** : installé (`npm -g`) et connecté au compte Gmail de Vadim (projet Google Cloud `gws-claude`, client OAuth « bureau », mode Test). Scopes : drive, sheets, gmail.modify, calendar, documents, presentations, tasks. Identifiants chiffrés dans `~\.config\gws\`.
-
-**Vérifié le 2026-11-19 (`claude mcp list`)** : playwright, 21st, rea ✅ connectés ; apify ⚠ « Needs authentication » (faire `/mcp` dans une session Claude Code → apify → se connecter). Connecteurs claude.ai aussi actifs : Gmail, Drive, Docs, Sheets, Slides, Calendar, Gamma, Claude Docs.
-
-**Dev ✅** : git 2.56 + GitHub CLI `gh` 2.105 (connecté au compte GitHub `vad20`, HTTPS). Orca installé et connecté à Claude.
-
-**watch ✅** : prérequis installés via winget (Python 3.12.10 = `python` par défaut, ffmpeg 9.0.2, yt-dlp 2026.10.26, deno 2.9.8). Mettre à jour yt-dlp avec `winget upgrade --id yt-dlp.yt-dlp --exact`.
-
-**⚠ Windows : PowerShell bloque les scripts `.ps1`** → toujours appeler `gws.cmd`, `npx.cmd`, `npm.cmd` (pas `gws`, `npx`, `npm`).
-
-Commandes à lancer dans un terminal où `claude` est installé (`--scope user` = toutes les sessions) :
-
-| Serveur | Dépôt | Commande | Remarque |
+| Skill(s) | Source | Usage | État |
 |---|---|---|---|
-| Playwright | microsoft/playwright-mcp | `claude mcp add --scope user playwright -- cmd /c npx -y @playwright/mcp@latest` | Pilote un navigateur. Aucune clé |
-| Apify | apify/apify-mcp-server | `claude mcp add --scope user apify https://mcp.apify.com -t http` | Scraping web. Connexion OAuth au 1er usage |
-| 21st.dev Magic | 21st-dev/magic-mcp | `npx @21st-dev/cli@latest init --client claude` | Clé gratuite sur 21st.dev/mcp (`API_KEY_21ST`) |
-| REA | morluto/rea | `npx rea-agents setup` | Assistant d'installation interactif |
+| `gws-shared`, `gws-gmail`, `gws-drive`, `gws-docs`, `gws-sheets`, `gws-calendar`, `gws-slides`, `gws-tasks`, `gws-forms`, `gws-people`, `gws-meet`, `gws-workflow` (+ `gws-chat`, `gws-keep` : comptes Workspace pro seulement) | googleworkspace/cli | Piloter Google via la CLI `gws.cmd` | ✅ connecté (projet Google Cloud `gws-claude`, mode Test ; scopes drive, sheets, gmail.modify, calendar, documents, presentations, tasks ; identifiants chiffrés dans `~\.config\gws\`) |
 
-## 2b. Voix off (TTS)
+Aussi : connecteurs du compte claude.ai (Gmail, Drive, Docs, Sheets, Slides, Calendar, Gamma, Claude Docs) — suivent le compte, rien à installer. 81 autres skills gws (`recipe-*`, `persona-*`) dans `depots\cli\skills\`.
 
-**Moteur par défaut : Chatterbox Multilingual** (Resemble AI, licence **MIT** → usage commercial OK, aucune mention obligatoire). Tourne en local sur le GPU (RTX 4070 Ti).
-- Dossier : `C:\Users\vadim\outils-claude\chatterbox\` (venv Python 3.12 dans `.venv`, PyTorch 2.6 CUDA 12.4, chatterbox-tts 0.1.7)
-- Commande : `C:\Users\vadim\outils-claude\chatterbox\.venv\Scripts\python.exe C:\Users\vadim\outils-claude\chatterbox\voix.py "Texte" sortie.wav [--ref voix.wav] [--exag 0.5] [--cfg 0.5]`
-- `--ref` = clonage d'une voix depuis un enregistrement de 10-20 s. Les sorties portent un filigrane audio inaudible (Perth).
-- Préférences de Vadim : voix **naturelle et fluide** (Kokoro jugé trop robotique → ne pas l'utiliser). **Aucune mention/pub d'un service** dans les vidéos → éviter le plan gratuit ElevenLabs et les modèles CC-BY (ex. Thomcles/Chatterbox-TTS-French).
-- Alternative si besoin : Qwen3-TTS (Apache 2.0). Kokoro (`hyperframes tts`) reste installé mais déconseillé.
-- Dépôt évalué et non retenu : Bricesodini/Vocalie-TTS (interface lourde, 1 seul auteur ; on utilise son moteur directement).
+## 5. Développement
 
-## 3. Applications / autres (ni skill ni MCP directement)
+| Outil | Source | Usage | État |
+|---|---|---|---|
+| `ponytail`, `ponytail-review`, `ponytail-audit`, `ponytail-debt`, `ponytail-gain`, `ponytail-help` | DietrichGebert/ponytail (MIT) | Coder au plus simple, revues et audits de dépôt | skills |
+| `firecrawl-build`, `-onboarding`, `-scrape`, `-search`, `-interact` | firecrawl/firecrawl | Intégrer Firecrawl dans une appli | Clé `FIRECRAWL_API_KEY` |
+| `21st-ui` + MCP 21st | 21st-dev/magic-mcp | Composants UI React | ✅ clé configurée |
+| `reverse-engineer-anything` + MCP REA | morluto/rea | Rétro-ingénierie | ✅ |
+| Plugin **CLI-Anything** (`/cli-anything`, `/list`, `/refine`, `/test`, `/validate`) | HKUDS/CLI-Anything (Apache-2.0) | Créer des interfaces en ligne de commande pour piloter n'importe quel logiciel (Blender, Audacity, GIMP, OBS…). 151 harnais prêts sur https://clianything.cc/ | ✅ plugin `cli-anything@cli-anything` (scope user) |
+| `find-skills` | vercel-labs/skills | Trouver/installer de nouveaux skills (`npx.cmd skills add …`) | Node 22.20+ |
+| git, gh | — | Versionner, GitHub | ✅ compte `vad20`, HTTPS |
+| Orca | stablyai/orca | Orchestrer plusieurs agents en parallèle (appli) | ✅ installé, connecté à Claude |
 
-| Outil | Dépôt | Description |
+## 6. Web et navigateur
+
+| Serveur MCP | Commande d'installation | État |
 |---|---|---|
-| Orca | stablyai/orca | Appli de bureau qui orchestre plusieurs agents (Claude Code, Codex…) en parallèle. À installer depuis https://orca.dev/download. Ses skills (`depots\orca\skills\`) ne servent que si Orca est installé. |
-| gws (CLI) | googleworkspace/cli | Le programme derrière les skills `gws-*` (voir §1). |
-| skills (CLI) | vercel-labs/skills | Le programme `npx skills` derrière `find-skills`. |
+| Playwright | `claude mcp add --scope user playwright -- cmd /c npx -y @playwright/mcp@latest` | ✅ |
+| Apify (scraping, milliers d'« Actors ») | `claude mcp add --scope user apify https://mcp.apify.com -t http` | ⚠ connexion à faire (`/mcp` → apify) |
+| 21st | `claude mcp add 21st --scope user -e API_KEY_21ST=<clé> -- cmd /c npx -y @21st-dev/magic@latest` | ✅ |
+| REA | `npx.cmd rea-agents setup` (cocher Claude Code) | ✅ |
 
-### Catalogue ajouté le 2026-11-20 (applis/projets, **non installés**, à installer seulement si besoin)
+## 7. Sécurité des skills
 
-| Projet | Dépôt | Ce que c'est | Remarque |
+- **SkillSpector** (NVIDIA, Apache-2.0) : `skillspector scan <dossier> --no-llm` (`--recursive` pour un dossier de skills). Installé via `uv tool install --python 3.13 "skillspector[mcp] @ git+https://github.com/NVIDIA/skillspector.git"` → `~\.local\bin\skillspector.exe`. Skill `skill-inspector` pour l'utiliser.
+- **Règle : scanner tout nouveau skill avant de l'installer.**
+- Scan du 2026-11-20 (77 skills, sans LLM) : risque max **36 / MEDIUM**, aucun HIGH réel. Alertes vérifiées et acceptables : `figma` lit `FIGMA_TOKEN`, `firecrawl-build-onboarding` écrit sa clé dans `.env`, `codex-images` lance Codex (facturation ChatGPT). Rapport : `scan-securite\rapport.json` (local).
+
+---
+
+## 8. Catalogue (applis/projets **non installés**, à proposer si utiles)
+
+| Projet | Source | Ce que c'est | Remarque |
 |---|---|---|---|
-| Chatterbox | resemble-ai/chatterbox (MIT) | Moteur de voix off | ✅ **déjà installé** (section 2b) |
-| Vocalie-TTS | Bricesodini/Vocalie-TTS (MIT) | Interface de voix off FR | Évalué, non retenu (voir 2b) |
-| Open Higgsfield | wide-trace/open-higgsfield (pas de licence) | Studio de génération image/vidéo | Appelle des modèles payants via API ; pas de licence = réutilisation non autorisée en théorie |
-| Open-Generative-AI | Anil-matcha/Open-Generative-AI (MIT) | Studio image/vidéo IA « libre » | Utilise des API externes (clés/crédits) |
-| VoiceStudio | debpalash/VoiceStudio (AGPL-3.0) | Alternative locale à ElevenLabs (clonage, TTS) | Alternative à Chatterbox ; skill `voicestudio` dans le dépôt si l'appli est installée |
-| Handy | cjpais/Handy (MIT) | Dictée vocale (parole → texte) hors ligne | Appli de bureau |
-| OpenWhispr | OpenWhispr/openwhispr (MIT) | Dictée vocale locale/cloud | Skills `openwhispr-*` dans le dépôt si l'appli est installée |
-| Cap | CapSoftware/Cap | Enregistrement d'écran (alternative à Loom) | Skill `cap` (CLI) dans le dépôt si installé |
-| AppFlowy | AppFlowy-IO/AppFlowy (AGPL-3.0) | Espace de travail type Notion | Appli de bureau |
-| Plane | makeplane/plane (AGPL-3.0) | Gestion de projet (Jira/Linear) | Auto-hébergement (Docker) |
+| VoiceStudio | debpalash/VoiceStudio (AGPL-3.0) | Alternative locale à ElevenLabs | Alternative à Chatterbox |
+| Vocalie-TTS | Bricesodini/Vocalie-TTS (MIT) | Interface voix off FR | Évalué, non retenu (on utilise Chatterbox directement) |
+| Handy | cjpais/Handy (MIT) | Dictée vocale hors ligne | Appli de bureau |
+| OpenWhispr | OpenWhispr/openwhispr (MIT) | Dictée vocale | Skills `openwhispr-*` dans le dépôt |
+| Cap | CapSoftware/Cap | Enregistrement d'écran (type Loom) | Skill `cap` dans le dépôt |
+| Open Higgsfield | wide-trace/open-higgsfield (sans licence) | Studio image/vidéo IA | Modèles payants via API ; pas de licence |
+| Open-Generative-AI | Anil-matcha/Open-Generative-AI (MIT) | Studio image/vidéo IA | API externes payantes |
+| freellmapi | tashfeenahmed/freellmapi (MIT) | Proxy unifiant ~87 fournisseurs de LLM gratuits | Serveur ; vérifier les CGU de chaque fournisseur |
+| OpenJarvis | open-jarvis/OpenJarvis (Apache-2.0) | Assistant IA personnel en local | Appli/serveur |
+| JARVIS (HuggingGPT) | microsoft/JARVIS (MIT) | Projet de recherche 2023 (LLM + modèles Hugging Face) | Ancien, non maintenu activement |
+| AppFlowy | AppFlowy-IO/AppFlowy (AGPL-3.0) | Espace de travail type Notion | Appli |
+| Plane | makeplane/plane (AGPL-3.0) | Gestion de projet | Auto-hébergement |
 | OpenProject | opf/openproject (GPL-3.0) | Gestion de projet | Auto-hébergement |
-| Chatwoot | chatwoot/chatwoot | Support client / live chat | Auto-hébergement |
-| Cal.diy | calcom/cal.diy (MIT) | Prise de rendez-vous (Cal.com) | Skill `calcom-api` dans le dépôt |
-| PostHog | PostHog/posthog | Analytique produit | Service/auto-hébergement ; MCP PostHog disponible |
-| Firecrawl | firecrawl/firecrawl (AGPL-3.0) | Scraping/recherche web pour agents | Skills installés ; MCP Firecrawl possible avec clé |
-| Composio | ComposioHQ/composio (MIT) | 1000+ intégrations pour agents | Service avec clé ; skills du dépôt = internes aux devs |
-| Playwright | microsoft/playwright (Apache-2.0) | Automatisation de navigateur | ✅ déjà couvert par le **MCP Playwright** |
-| ECC | affaan-m/ECC (MIT) | Pack géant (~1000 skills) pour Claude Code | **Non installé en bloc** (trop gros) ; piocher des skills au cas par cas |
-| Ruflo | ruvnet/ruflo (MIT) | Essaims d'agents (~400 skills + MCP) | **Non installé** (lourd) ; à évaluer si besoin |
-
-Les skills internes aux dépôts Plane, Playwright, PostHog, Composio et Cal.diy servent à développer ces projets eux-mêmes : non installés.
+| Chatwoot | chatwoot/chatwoot | Support client | Auto-hébergement |
+| Cal.diy | calcom/cal.diy (MIT) | Prise de rendez-vous | Skill `calcom-api` dans le dépôt |
+| PostHog | PostHog/posthog | Analytique produit | MCP PostHog possible |
+| Composio | ComposioHQ/composio (MIT) | 1000+ intégrations | Service avec clé |
+| Playwright | microsoft/playwright | Automatisation navigateur | Couvert par le MCP Playwright |
+| ECC | affaan-m/ECC (MIT) | ~1000 skills | Non installé en bloc ; piocher au cas par cas |
+| Ruflo | ruvnet/ruflo (MIT) | Essaims d'agents (~400 skills) | Non installé (lourd) |

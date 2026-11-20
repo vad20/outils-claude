@@ -115,9 +115,24 @@ if (Test-Path $vpy) {
     }
 }
 
-# ---------------------------------------------------------------- 6. Serveurs MCP
-Titre "6/7 Serveurs MCP"
+# ---------------------------------------------------------------- 5b. SkillSpector (scanner de securite des skills)
+Titre "5b SkillSpector"
+if (-not (Test-Path "$HOME\.local\bin\skillspector.exe") -and $py) {
+    & $py -m pip install --user -q uv
+    $uv = & $py -c "import sysconfig,os;print(os.path.join(sysconfig.get_path('scripts','nt_user'),'uv.exe'))"
+    if (Test-Path $uv) { & $uv tool install --python 3.13 "skillspector[mcp] @ git+https://github.com/NVIDIA/skillspector.git" 2>$null | Out-Null }
+}
+if (Test-Path "$HOME\.local\bin\skillspector.exe") { Ok "SkillSpector" } else { [void]$Manuel.Add("SkillSpector : voir la section 7 du README") }
+
+# ---------------------------------------------------------------- 6. Serveurs MCP et plugins
+Titre "6/7 Serveurs MCP et plugins"
 if (A-Commande claude) {
+    $plugins = (claude plugin list 2>$null) -join "`n"
+    if ($plugins -notmatch "cli-anything@cli-anything") {
+        claude plugin marketplace add HKUDS/CLI-Anything 2>$null | Out-Null
+        claude plugin install cli-anything@cli-anything --scope user 2>$null | Out-Null
+    }
+    Ok "plugin CLI-Anything"
     $existants = (claude mcp list 2>$null) -join "`n"
     if ($existants -notmatch "playwright:") { claude mcp add --scope user playwright -- cmd /c npx -y "@playwright/mcp@latest" | Out-Null }
     Ok "playwright"

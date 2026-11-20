@@ -1,6 +1,6 @@
 ﻿# Envoie l'état actuel des skills, de la note et du dossier d'outils sur le dépôt GitHub privé.
 # Lancer via SAUVEGARDER.bat après avoir ajouté ou modifié un outil.
-$ErrorActionPreference = "Stop"
+$ErrorActionPreference = "Continue"   # git écrit ses avertissements sur stderr : ne pas les traiter comme des erreurs
 $Repo = $PSScriptRoot
 $ClaudeDir = Join-Path $HOME ".claude"
 
